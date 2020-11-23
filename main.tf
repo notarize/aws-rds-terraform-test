@@ -103,7 +103,6 @@ locals {
 
   tags = {
     Name            = var.name
-    ServiceProvider = "Rackspace"
     Environment     = var.environment
   }
 
