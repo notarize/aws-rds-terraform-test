@@ -412,7 +412,7 @@ module "read_iops_high_alarm_email" {
 }
 
 module "cpu_high_alarm_email" {
-  source = "git@github.com:/notarize/terraform-aws-cloudwatch_alarm.git?ref=v.0.0.2"
+  source = "git@github.com:/notarize/terraform-aws-cloudwatch_alarm.git?ref=v0.0.4"
 
   alarm_description        = "Alarm if CPU > ${var.alarm_cpu_limit} for 15 minutes"
   alarm_name               = "${var.name}-cpu-high-email"
