@@ -155,16 +155,17 @@ resource "aws_db_parameter_group" "db_parameter_group" {
   description = "Database parameter group for ${var.name}"
   name_prefix = "${var.name}-"
   family      = local.family
-  tags        = merge(var.tags, local.tags)
 
   dynamic "parameter" {
-    for_each = concat(var.parameters, local.parameters[local.parameter_lookup])
+    for_each = var.parameters
     content {
-      apply_method = lookup(parameter.value, "apply_method", null)
       name         = parameter.value.name
       value        = parameter.value.value
+      apply_method = lookup(parameter.value, "apply_method", null)
     }
   }
+
+  tags        = merge(var.tags, local.tags)
 
   lifecycle {
     create_before_destroy = true
@@ -179,25 +180,6 @@ resource "aws_db_option_group" "db_option_group" {
   name_prefix              = "${var.name}-"
   option_group_description = "Option group for ${var.name}"
   tags                     = merge(var.tags, local.tags)
-
-  dynamic "option" {
-    for_each = concat(var.options, local.options)
-    content {
-      db_security_group_memberships  = lookup(option.value, "db_security_group_memberships", null)
-      option_name                    = option.value.option_name
-      port                           = lookup(option.value, "port", null)
-      version                        = lookup(option.value, "version", null)
-      vpc_security_group_memberships = lookup(option.value, "vpc_security_group_memberships", null)
-
-      dynamic "option_settings" {
-        for_each = [lookup(option.value, "option_settings", null)]
-        content {
-          name  = option_settings.value.name
-          value = option_settings.value.value
-        }
-      }
-    }
-  }
 
   lifecycle {
     create_before_destroy = true
@@ -236,8 +218,6 @@ resource "aws_iam_role_policy_attachment" "enhanced_monitoring_policy" {
 
 locals {
   subnet_group        = length(aws_db_subnet_group.db_subnet_group.*.id) > 0 ? aws_db_subnet_group.db_subnet_group[0].id : var.existing_subnet_group
-  parameter_group     = length(aws_db_parameter_group.db_parameter_group.*.id) > 0 ? aws_db_parameter_group.db_parameter_group[0].id : var.existing_parameter_group_name
-  option_group        = length(aws_db_option_group.db_option_group.*.id) > 0 ? aws_db_option_group.db_option_group[0].id : var.existing_option_group_name
   monitoring_role_arn = length(aws_iam_role.enhanced_monitoring_role.*.arn) > 0 ? aws_iam_role.enhanced_monitoring_role[0].arn : var.existing_monitoring_role
 }
 
@@ -268,8 +248,8 @@ resource "aws_db_instance" "db_instance" {
   monitoring_role_arn                 = var.monitoring_interval > 0 ? local.monitoring_role_arn : null
   multi_az                            = var.read_replica ? false : var.multi_az
   name                                = var.dbname
-  option_group_name                   = local.same_region_replica ? null : local.option_group
-  parameter_group_name                = local.same_region_replica ? null : local.parameter_group
+  option_group_name                   = var.existing_option_group_name
+  parameter_group_name                = var.existing_parameter_group_name
   password                            = var.password
   port                                = local.port
   publicly_accessible                 = var.publicly_accessible
