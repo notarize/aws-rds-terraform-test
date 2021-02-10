@@ -173,6 +173,12 @@ variable "existing_parameter_group_name" {
   default     = ""
 }
 
+variable "performance_insights_enabled" {
+  description = "Specifies whether Performance Insights is enabled or not."
+  type        = bool
+  default     = true
+}
+
 variable "family" {
   description = "Parameter Group Family Name (ex. mysql5.7, sqlserver-se-12.0, postgres9.5, postgres10, postgres11, oracle-se-12.1, mariadb10.1)"
   type        = "string"
