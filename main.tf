@@ -185,16 +185,16 @@ resource "aws_db_option_group" "db_option_group" {
     for_each = var.options
     content {
       option_name                    = option.value.option_name
-      db_security_group_memberships  = lookup(option.value, "db_security_group_memberships", null)	
-      port                           = lookup(option.value, "port", null)	
-      version                        = lookup(option.value, "version", null)	
+      db_security_group_memberships  = lookup(option.value, "db_security_group_memberships", null)
+      port                           = lookup(option.value, "port", null)
+      version                        = lookup(option.value, "version", null)
       vpc_security_group_memberships = lookup(option.value, "vpc_security_group_memberships", null)
 
-      dynamic "option_settings" {	
-        for_each = [lookup(option.value, "option_settings", null)]	
-        content {	
-          name  = option_settings.value.name	
-          value = option_settings.value.value	
+      dynamic "option_settings" {
+        for_each = [lookup(option.value, "option_settings", null)]
+        content {
+          name  = option_settings.value.name
+          value = option_settings.value.value
         }
       }
     }
