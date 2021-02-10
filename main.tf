@@ -181,6 +181,25 @@ resource "aws_db_option_group" "db_option_group" {
   option_group_description = "Option group for ${var.name}"
   tags                     = merge(var.tags, local.tags)
 
+  dynamic "option" {
+    for_each = var.options
+    content {
+      option_name                    = option.value.option_name
+      db_security_group_memberships  = lookup(option.value, "db_security_group_memberships", null)	
+      port                           = lookup(option.value, "port", null)	
+      version                        = lookup(option.value, "version", null)	
+      vpc_security_group_memberships = lookup(option.value, "vpc_security_group_memberships", null)
+
+      dynamic "option_settings" {	
+        for_each = [lookup(option.value, "option_settings", null)]	
+        content {	
+          name  = option_settings.value.name	
+          value = option_settings.value.value	
+        }
+      }
+    }
+  }
+
   lifecycle {
     create_before_destroy = true
   }
