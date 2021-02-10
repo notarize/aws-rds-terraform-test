@@ -33,16 +33,6 @@ output "monitoring_role" {
   value       = "${local.monitoring_role_arn}"
 }
 
-output "option_group" {
-  description = "The Option Group used by the DB Instance"
-  value       = "${local.option_group}"
-}
-
-output "parameter_group" {
-  description = "The Parameter Group used by the DB Instance"
-  value       = "${local.parameter_group}"
-}
-
 output "subnet_group" {
   description = "The DB Subnet Group used by the DB Instance"
   value       = "${local.subnet_group}"
