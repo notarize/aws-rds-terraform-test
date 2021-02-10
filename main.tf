@@ -247,6 +247,7 @@ resource "aws_db_instance" "db_instance" {
   monitoring_interval                 = var.monitoring_interval
   monitoring_role_arn                 = var.monitoring_interval > 0 ? local.monitoring_role_arn : null
   multi_az                            = var.read_replica ? false : var.multi_az
+  performance_insights_enabled        = var.performance_insights_enabled
   name                                = var.dbname
   option_group_name                   = var.existing_option_group_name
   parameter_group_name                = var.existing_parameter_group_name
