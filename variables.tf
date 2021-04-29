@@ -143,6 +143,12 @@ variable "timezone" {
 
 # Advance RDS
 
+variable "allow_major_version_upgrade" {
+  description = "Boolean value that indicates that major engine upgrades will be allowed"
+  type        = "string"
+  default     = true
+}
+
 variable "auto_minor_version_upgrade" {
   description = "Boolean value that indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window"
   type        = "string"

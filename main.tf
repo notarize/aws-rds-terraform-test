@@ -243,7 +243,7 @@ locals {
 resource "aws_db_instance" "db_instance" {
 
   allocated_storage                   = local.storage_size
-  allow_major_version_upgrade         = true
+  allow_major_version_upgrade         = var.allow_major_version_upgrade
   apply_immediately                   = var.apply_immediately
   auto_minor_version_upgrade          = var.auto_minor_version_upgrade
   backup_retention_period             = var.read_replica ? 0 : var.backup_retention_period
