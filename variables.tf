@@ -143,6 +143,12 @@ variable "timezone" {
 
 # Advance RDS
 
+variable "allow_major_version_upgrade" {
+  description = "Boolean value that indicates that major engine upgrades will be allowed"
+  type        = "string"
+  default     = true
+}
+
 variable "auto_minor_version_upgrade" {
   description = "Boolean value that indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window"
   type        = "string"
@@ -222,6 +228,12 @@ variable "storage_encrypted" {
 }
 
 # Monitoring
+
+variable "cpu_high_alarm_actions" {
+  description = "arn for cpu_high_alarm action"
+  type = string
+  default = "arn:aws:sns:us-east-1:241176755253:production-monitoring-notification"
+}
 
 variable "alarm_cpu_limit" {
   description = "CloudWatch CPUUtilization Threshold"
