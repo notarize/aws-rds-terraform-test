@@ -18,7 +18,7 @@ variable "security_groups" {
 
 variable "subnets" {
   description = "Subnets for RDS Instances"
-  type        = list(number)
+  type        = list
 }
 
 # Backups and Maintenance
@@ -211,7 +211,7 @@ variable "options" {
 
 variable "parameters" {
   description = "List of custom parameters to apply to the parameter group."
-  type        = list(number)
+  type        = list
   default     = []
 }
 
