@@ -231,8 +231,8 @@ variable "storage_encrypted" {
 
 variable "cpu_high_alarm_actions" {
   description = "arn for cpu_high_alarm action"
-  type = string
-  default = "arn:aws:sns:us-east-1:241176755253:production-monitoring-notification"
+  type        = string
+  default     = "arn:aws:sns:us-east-1:241176755253:production-monitoring-notification"
 }
 
 variable "alarm_cpu_limit" {

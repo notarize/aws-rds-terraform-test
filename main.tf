@@ -102,8 +102,8 @@ locals {
   license_model = lookup(local.engine_defaults[local.engine_class], "license", null)
 
   tags = {
-    Name            = var.name
-    Environment     = var.environment
+    Name        = var.name
+    Environment = var.environment
   }
 
   # If we are not setting a timezone, or we are using MSSQL, we will use "none" for the parameter list.
@@ -165,7 +165,7 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     }
   }
 
-  tags        = merge(var.tags, local.tags)
+  tags = merge(var.tags, local.tags)
 
   lifecycle {
     create_before_destroy = true
