@@ -18,7 +18,7 @@ variable "security_groups" {
 
 variable "subnets" {
   description = "Subnets for RDS Instances"
-  type        = list
+  type        = list(number)
 }
 
 # Backups and Maintenance
@@ -36,7 +36,7 @@ variable "backup_window" {
 
 variable "db_snapshot_id" {
   description = "The name of a DB snapshot (optional)."
-  type        = string(number)
+  type        = string
   default     = ""
 }
 
