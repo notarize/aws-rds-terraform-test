@@ -36,7 +36,7 @@ variable "backup_window" {
 
 variable "db_snapshot_id" {
   description = "The name of a DB snapshot (optional)."
-  type        = string
+  type        = string(number)
   default     = ""
 }
 
@@ -211,7 +211,7 @@ variable "options" {
 
 variable "parameters" {
   description = "List of custom parameters to apply to the parameter group."
-  type        = list
+  type        = list(number)
   default     = []
 }
 
