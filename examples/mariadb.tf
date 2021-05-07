@@ -131,21 +131,21 @@ module "rds_replica" {
   # Required Configuration
   ##################
 
-  subnets                       = "${module.vpc.private_subnets}"        #  Required
-  security_groups               = ["${module.vpc.default_sg}"]           #  Required
+  subnets                       = "${module.vpc.private_subnets}" #  Required
+  security_groups               = ["${module.vpc.default_sg}"]    #  Required
   create_subnet_group           = false
   existing_subnet_group         = "${module.rds_master.subnet_group}"
-  name                          = "sample-mariadb-rds-rr"                #  Required
-  engine                        = "mariadb"                              #  Required
-  instance_class                = "db.t2.large"                          #  Required
-  storage_encrypted             = true                                   #  Parameter defaults to false, but enabled for Cross Region Replication example
+  name                          = "sample-mariadb-rds-rr" #  Required
+  engine                        = "mariadb"               #  Required
+  instance_class                = "db.t2.large"           #  Required
+  storage_encrypted             = true                    #  Parameter defaults to false, but enabled for Cross Region Replication example
   create_parameter_group        = false
   existing_parameter_group_name = "${module.rds_master.parameter_group}"
   create_option_group           = false
   existing_option_group_name    = "${module.rds_master.option_group}"
   read_replica                  = true
   source_db                     = "${module.rds_master.db_instance}"
-  password                      = ""                                     #  Retrieved from source DB
+  password                      = "" #  Retrieved from source DB
 
   ##################
   # Backups and Maintenance
