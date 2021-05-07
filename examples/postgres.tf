@@ -42,14 +42,14 @@ module "rds_master" {
   # Required Configuration
   ##################
 
-  subnets           = "${module.vpc.private_subnets}" #  Required
-  security_groups   = ["${module.vpc.default_sg}"]    #  Required
-  name              = "sample-postgres-rds"           #  Required
-  engine            = "postgres"                      #  Required
-  instance_class    = "db.t2.large"                   #  Required
-  storage_encrypted = true                            #  Parameter defaults to false, but enabled for Cross Region Replication example
+  subnets           = module.vpc.private_subnets   #  Required
+  security_groups   = ["${module.vpc.default_sg}"] #  Required
+  name              = "sample-postgres-rds"        #  Required
+  engine            = "postgres"                   #  Required
+  instance_class    = "db.t2.large"                #  Required
+  storage_encrypted = true                         #  Parameter defaults to false, but enabled for Cross Region Replication example
   # username = "dbadmin"
-  password = "${data.aws_kms_secrets.rds_credentials.plaintext["password"]}" #  Required
+  password = data.aws_kms_secrets.rds_credentials.plaintext["password"] #  Required
 
   ##################
   # VPC Configuration
@@ -136,21 +136,21 @@ module "rds_replica" {
   # Required Configuration
   ##################
 
-  subnets                       = "${module.vpc.private_subnets}"        #  Required
-  security_groups               = ["${module.vpc.default_sg}"]           #  Required
+  subnets                       = module.vpc.private_subnets   #  Required
+  security_groups               = ["${module.vpc.default_sg}"] #  Required
   create_subnet_group           = false
-  existing_subnet_group         = "${module.rds_master.subnet_group}"
-  name                          = "sample-postgres-rds-rr"               #  Required
-  engine                        = "postgres"                             #  Required
-  instance_class                = "db.t2.large"                          #  Required
-  storage_encrypted             = true                                   #  Parameter defaults to false, but enabled for Cross Region Replication example
+  existing_subnet_group         = module.rds_master.subnet_group
+  name                          = "sample-postgres-rds-rr" #  Required
+  engine                        = "postgres"               #  Required
+  instance_class                = "db.t2.large"            #  Required
+  storage_encrypted             = true                     #  Parameter defaults to false, but enabled for Cross Region Replication example
   create_parameter_group        = false
-  existing_parameter_group_name = "${module.rds_master.parameter_group}"
+  existing_parameter_group_name = module.rds_master.parameter_group
   create_option_group           = false
-  existing_option_group_name    = "${module.rds_master.option_group}"
+  existing_option_group_name    = module.rds_master.option_group
   read_replica                  = true
-  source_db                     = "${module.rds_master.db_instance}"
-  password                      = ""                                     #  Retrieved from source DB
+  source_db                     = module.rds_master.db_instance
+  password                      = "" #  Retrieved from source DB
 
   ##################
   # Backups and Maintenance
@@ -234,16 +234,16 @@ module "rds_cross_region_replica" {
   # Required parameters #
   #######################
 
-  subnets           = "${module.vpc_dr.private_subnets}"             #  Required
-  security_groups   = ["${module.vpc_dr.default_sg}"]                #  Required
-  name              = "sample-postgres-rds-crr"                      #  Required
-  engine            = "postgres"                                     #  Required
-  instance_class    = "db.t2.large"                                  #  Required
-  storage_encrypted = true                                           #  Parameter defaults to false, but enabled for Cross Region Replication example
-  kms_key_id        = "${data.aws_kms_alias.rds_crr.target_key_arn}" # Parameter needed since we are replicating an db instance with encrypted storage.
-  password          = ""                                             #  Retrieved from source DB
+  subnets           = module.vpc_dr.private_subnets             #  Required
+  security_groups   = ["${module.vpc_dr.default_sg}"]           #  Required
+  name              = "sample-postgres-rds-crr"                 #  Required
+  engine            = "postgres"                                #  Required
+  instance_class    = "db.t2.large"                             #  Required
+  storage_encrypted = true                                      #  Parameter defaults to false, but enabled for Cross Region Replication example
+  kms_key_id        = data.aws_kms_alias.rds_crr.target_key_arn # Parameter needed since we are replicating an db instance with encrypted storage.
+  password          = ""                                        #  Retrieved from source DB
   read_replica      = true
-  source_db         = "${module.rds_master.db_instance_arn}"
+  source_db         = module.rds_master.db_instance_arn
 
   ##################
   # VPC Configuration

@@ -1,26 +1,26 @@
 output "db_endpoint" {
   description = "Database endpoint"
-  value       = "${aws_db_instance.db_instance.endpoint}"
+  value       = aws_db_instance.db_instance.endpoint
 }
 
 output "db_endpoint_address" {
   description = "Address of database endpoint"
-  value       = "${aws_db_instance.db_instance.address}"
+  value       = aws_db_instance.db_instance.address
 }
 
 output "db_endpoint_port" {
   description = "Port of database endpoint"
-  value       = "${aws_db_instance.db_instance.port}"
+  value       = aws_db_instance.db_instance.port
 }
 
 output "db_instance" {
   description = "The DB instance identifier"
-  value       = "${aws_db_instance.db_instance.id}"
+  value       = aws_db_instance.db_instance.id
 }
 
 output "db_instance_arn" {
   description = "The DB instance ARN"
-  value       = "${aws_db_instance.db_instance.arn}"
+  value       = aws_db_instance.db_instance.arn
 }
 
 output "jdbc_connection_string" {
@@ -30,10 +30,10 @@ output "jdbc_connection_string" {
 
 output "monitoring_role" {
   description = "The IAM role used for Enhanced Monitoring"
-  value       = "${local.monitoring_role_arn}"
+  value       = local.monitoring_role_arn
 }
 
 output "subnet_group" {
   description = "The DB Subnet Group used by the DB Instance"
-  value       = "${local.subnet_group}"
+  value       = local.subnet_group
 }
