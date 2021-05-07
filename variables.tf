@@ -211,7 +211,7 @@ variable "options" {
 
 variable "parameters" {
   description = "List of custom parameters to apply to the parameter group."
-  type        = list(string)
+  type        = list
   default     = []
 }
 
