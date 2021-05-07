@@ -18,7 +18,7 @@ variable "security_groups" {
 
 variable "subnets" {
   description = "Subnets for RDS Instances"
-  type        = list(string)
+  type        = list
 }
 
 # Backups and Maintenance
