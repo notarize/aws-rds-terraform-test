@@ -396,7 +396,6 @@ module "read_iops_high_alarm_email" {
   comparison_operator      = "GreaterThanThreshold"
   customer_alarms_enabled  = true
   evaluation_periods       = 5
-  datapoints_to_alarm      = 5
   metric_name              = "ReadIOPS"
   namespace                = "AWS/RDS"
   notification_topic       = [var.notification_topic]
