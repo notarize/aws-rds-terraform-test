@@ -391,7 +391,7 @@ module "write_iops_high_alarm_email" {
 module "read_iops_high_alarm_email" {
   source = "git@github.com:/notarize/terraform-aws-cloudwatch_alarm.git?ref=v.0.0.1"
 
-  alarm_description        = "Alarm if ReadIOPs > ${var.alarm_read_iops_limit} for 5 minutes"
+  alarm_description        = "Alarm if ReadIOPs > ${var.alarm_read_iops_limit} for ${var.alarm_read_iops_period} seconds"
   alarm_name               = "${var.name}-read-iops-high-email"
   comparison_operator      = "GreaterThanThreshold"
   customer_alarms_enabled  = true
@@ -399,7 +399,7 @@ module "read_iops_high_alarm_email" {
   metric_name              = "ReadIOPS"
   namespace                = "AWS/RDS"
   notification_topic       = [var.notification_topic]
-  period                   = 60
+  period                   = var.alarm_read_iops_period
   rackspace_alarms_enabled = false
   statistic                = "Average"
   threshold                = var.alarm_read_iops_limit

@@ -18,7 +18,7 @@ variable "security_groups" {
 
 variable "subnets" {
   description = "Subnets for RDS Instances"
-  type        = list
+  type        = list(any)
 }
 
 # Backups and Maintenance
@@ -211,7 +211,7 @@ variable "options" {
 
 variable "parameters" {
   description = "List of custom parameters to apply to the parameter group."
-  type        = list
+  type        = list(any)
   default     = []
 }
 
@@ -250,8 +250,15 @@ variable "alarm_free_space_limit" {
 variable "alarm_read_iops_limit" {
   description = "CloudWatch Read IOPSLimit Threshold"
   type        = string
-  default     = 200
+  default     = 300
 }
+
+variable "alarm_read_iops_period" {
+  description = "CloudWatch Read IOPS Period (in seconds)"
+  type        = string
+  default     = 300
+}
+
 
 variable "alarm_write_iops_limit" {
   description = "CloudWatch Write IOPSLimit Threshold"
